@@ -1,0 +1,74 @@
+# Misc user settings
+PATH=$PATH:$HOME/bin
+EDITOR="vim"
+CDPATH=.:~/code
+MANPATH="/usr/local/man:$MANPATH"
+export PATH EDITOR CDPATH MANPATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/mrhodes/.oh-my-zsh"
+
+# ZSH settings
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="bira"
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
+DISABLE_AUTO_TITLE="true"
+
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# Displays who is listening on a certain port. 
+# $1 - the port we are checking
+function listening {
+    lsof -nP -i4TCP:$1 | grep LISTEN    
+}
+
+# Stops and removes all supplied docker containers.
+function srm {
+    for container_id in "$@"
+    do
+        docker stop $container_id && docker rm $container_id 
+    done
+}
+
+# Runs spark-submit with suppressing errors.
+function quiet-submit {
+    spark-submit "$@" 2> /dev/null
+}
+
+alias jsonp="python -m json.tool"
+alias vi="vim"
+alias beep="echo -ne '\007'"
+alias lsh="ls -alh"
+alias as-gmail='git commit --author="Michael Rhodes <michaelleerhodes@gmail.com>"'
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias refresh="source ~/.zshrc"
+
+# Keypad
+# 0 . Enter
+bindkey -s "^[Op" "0"
+bindkey -s "^[On" "."
+bindkey -s "^[OM" "^M"
+# 1 2 3
+bindkey -s "^[Oq" "1"
+bindkey -s "^[Or" "2"
+bindkey -s "^[Os" "3"
+# 4 5 6
+bindkey -s "^[Ot" "4"
+bindkey -s "^[Ou" "5"
+bindkey -s "^[Ov" "6"
+# 7 8 9
+bindkey -s "^[Ow" "7"
+bindkey -s "^[Ox" "8"
+bindkey -s "^[Oy" "9"
+# + -  * / =
+bindkey -s "^[Ok" "+"
+bindkey -s "^[Om" "-"
+bindkey -s "^[Oj" "*"
+bindkey -s "^[Oo" "/"
+bindkey -s "^[OX" "="
